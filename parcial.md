@@ -68,9 +68,18 @@
 
 ![](images/26.png)
 
-
 **##CREACION DEL HTTP TUITION**
 
 ![](images/27.png)
 
 ![](images/28.png)
+
+**##CREACION DEL ARCHIVO FAKER CON 20 DATOS FALSOS**
+
+![](images/29.png)
+
+![](images/30.png)
+
+![](images/31.png)
+
+![](images/32.png)
