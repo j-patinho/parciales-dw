@@ -2,16 +2,21 @@ import dotenv from "dotenv";
 import express, { Application } from "express";
 import morgan from "morgan";
 import { sequelize, testConnection, getDatabaseInfo } from "../database/db";
+import { Routes } from "../routes/index";
 
 var cors = require("cors");
 
 dotenv.config();
 
 export class App {
+
   public app: Application;
+  public routePrv: Routes = new Routes();
 
   constructor(private port?: number | string) {
+
     this.app = express();
+
     this.settings();
     this.middlewares();
     this.routes();
@@ -19,11 +24,16 @@ export class App {
   }
 
   private settings(): void {
-    this.app.set('port', this.port || process.env.PORT || 4000);
+
+    this.app.set(
+      "port",
+      this.port || process.env.PORT || 3000
+    );
   }
 
   private middlewares(): void {
-    this.app.use(morgan('dev'));
+
+    this.app.use(morgan("dev"));
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
@@ -31,35 +41,58 @@ export class App {
 
   // Route configuration
   private routes(): void {
-    
+
+    // Agregar rutas aquí
+    this.routePrv.carRoutes.routes(this.app);
+    this.routePrv.tuitionRoutes.routes(this.app);
   }
 
   private async dbConnection(): Promise<void> {
-    try {
-      // Mostrar información de la base de datos seleccionada
-      const dbInfo = getDatabaseInfo();
-      console.log(`🔗 Intentando conectar a: ${dbInfo.engine.toUpperCase()}`);
 
-      // Probar la conexión
+    try {
+
+      const dbInfo = getDatabaseInfo();
+
+      console.log(
+        `🔗 Intentando conectar a: ${dbInfo.engine.toUpperCase()}`
+      );
+
       const isConnected = await testConnection();
 
       if (!isConnected) {
-        throw new Error(`No se pudo conectar a la base de datos ${dbInfo.engine.toUpperCase()}`);
+
+        throw new Error(
+          `No se pudo conectar a la base de datos ${dbInfo.engine.toUpperCase()}`
+        );
       }
 
-      // Sincronizar la base de datos
       await sequelize.sync({ force: false });
-      console.log(`📦 Base de datos sincronizada exitosamente`);
+
+      console.log(
+        `📦 Base de datos sincronizada exitosamente`
+      );
 
     } catch (error) {
-      console.error("❌ Error al conectar con la base de datos:", error);
-      process.exit(1); // Terminar la aplicación si no se puede conectar
+
+      console.error(
+        "❌ Error al conectar con la base de datos:",
+        error
+      );
+
+      process.exit(1);
     }
   }
 
   async listen() {
-    this.app.listen(this.app.get('port'), () => {
-      console.log(`🚀 Servidor ejecutándose en puerto ${this.app.get('port')}`);
-    });
+
+    this.app.listen(
+      this.app.get("port"),
+      () => {
+
+        console.log(
+          `🚀 Servidor ejecutándose en puerto ${this.app.get("port")}`
+        );
+      }
+    );
   }
 }
