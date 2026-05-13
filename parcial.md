@@ -62,6 +62,15 @@
 
 ![](images/24.png)
 
-**##CREACION DE LA RUTA TUITION**
+**##CREACION DEL HTTP CAR**
 
-![](images/24.png)
+![](images/25.png)
+
+![](images/26.png)
+
+
+**##CREACION DEL HTTP TUITION**
+
+![](images/27.png)
+
+![](images/28.png)
