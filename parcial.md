@@ -61,3 +61,7 @@
 **##CREACION DE LA RUTA TUITION**
 
 ![](images/24.png)
+
+**##CREACION DE LA RUTA TUITION**
+
+![](images/24.png)
